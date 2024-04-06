@@ -7,6 +7,7 @@ var grid_position: Vector2i
 func setup(parent: Node2D):
 	thing_to_move = parent
 	reset_grid_position()
+	Map.add_actor(thing_to_move, grid_position)
 
 func reset_grid_position():
 	grid_position = Map.get_map_coord(thing_to_move.global_position)
@@ -25,5 +26,6 @@ func move(direction: Vector2i):
 func try_move_to(location: Vector2i):
 	if Map.can_move(location):
 		move_to(location)
+		Map.update_actor(thing_to_move, grid_position)
 		return true
 	return false
