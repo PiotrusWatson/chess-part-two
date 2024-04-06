@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 Map="*res://Objects/map.gd"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gdDelaunay/plugin.cfg")
+
 [input]
 
 Left={

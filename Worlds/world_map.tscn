@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bcho31krxpwj0"]
+
+[ext_resource type="Script" path="res://blob_builder.gd" id="1_bqs57"]
+
+[node name="WorldMap" type="Node2D"]
+
+[node name="VoronoiGenerator" type="Node2D" parent="."]
+script = ExtResource("1_bqs57")
