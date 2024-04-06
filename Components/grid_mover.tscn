@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cjpps2yx4jqr3"]
+
+[ext_resource type="Script" path="res://Components/grid_mover.gd" id="1_m0pnd"]
+
+[node name="GridMover" type="Node"]
+script = ExtResource("1_m0pnd")

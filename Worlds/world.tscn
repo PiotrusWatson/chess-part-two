@@ -1,0 +1,83 @@
+[gd_scene load_steps=17 format=3 uid="uid://byi4gkblpkwco"]
+
+[ext_resource type="Script" path="res://signals.gd" id="1_srkb5"]
+[ext_resource type="Texture2D" uid="uid://d03hhc0gc5voi" path="res://Sprites/pixel chess_v1.2/16x16 pieces/chess_tiles.png" id="2_sddm0"]
+[ext_resource type="Script" path="res://Worlds/ingame_map.gd" id="3_g1edg"]
+[ext_resource type="Texture2D" uid="uid://bwwggnj25dwo7" path="res://Sprites/pixel chess_v1.2/16x16 pieces/BlackPieces_Simplified.png" id="4_g8f77"]
+[ext_resource type="Script" path="res://Scenes/KingBehaviour.gd" id="4_m3spg"]
+[ext_resource type="PackedScene" uid="uid://cjpps2yx4jqr3" path="res://Components/grid_mover.tscn" id="6_8hn4e"]
+[ext_resource type="Texture2D" uid="uid://cc6u1mrhwmixh" path="res://Sprites/pixel chess_v1.2/16x16 pieces/cursor.png" id="7_1si2t"]
+[ext_resource type="Script" path="res://Scenes/cursor.gd" id="7_pg30j"]
+[ext_resource type="Script" path="res://Components/grid_mover.gd" id="9_244jr"]
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_g6xnf"]
+tile_data = PackedInt32Array(0, 65536, 0, 65536, 0, 0, 1, 0, 0, 65537, 65536, 0)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xrqyc"]
+texture = ExtResource("2_sddm0")
+0:0/0 = 0
+1:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_bpi17"]
+sources/0 = SubResource("TileSetAtlasSource_xrqyc")
+pattern_0 = SubResource("TileMapPattern_g6xnf")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r61ni"]
+atlas = ExtResource("4_g8f77")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_30n4f"]
+atlas = ExtResource("7_1si2t")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_00lyd"]
+atlas = ExtResource("7_1si2t")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jrbdq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_30n4f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_00lyd")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}]
+
+[node name="World" type="Node2D"]
+texture_filter = 1
+script = ExtResource("1_srkb5")
+
+[node name="Map" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_bpi17")
+format = 2
+layer_0/name = "Checkerboard"
+layer_0/tile_data = PackedInt32Array(-2, 65536, 0, 65534, 0, 0, -1, 0, 0, 65535, 65536, 0, 131070, 65536, 0, 196606, 0, 0, 131071, 0, 0, 196607, 65536, 0, 262142, 65536, 0, 327678, 0, 0, 262143, 0, 0, 327679, 65536, 0, 393214, 65536, 0, 458750, 0, 0, 393215, 0, 0, 458751, 65536, 0, -65536, 65536, 0, 0, 0, 0, -65535, 0, 0, 1, 65536, 0, 65536, 65536, 0, 131072, 0, 0, 65537, 0, 0, 131073, 65536, 0, 196608, 65536, 0, 262144, 0, 0, 196609, 0, 0, 262145, 65536, 0, 327680, 65536, 0, 393216, 0, 0, 327681, 0, 0, 393217, 65536, 0, -65534, 65536, 0, 2, 0, 0, -65533, 0, 0, 3, 65536, 0, 65538, 65536, 0, 131074, 0, 0, 65539, 0, 0, 131075, 65536, 0, 196610, 65536, 0, 262146, 0, 0, 196611, 0, 0, 262147, 65536, 0, 327682, 65536, 0, 393218, 0, 0, 327683, 0, 0, 393219, 65536, 0, -65532, 65536, 0, 4, 0, 0, -65531, 0, 0, 5, 65536, 0, 65540, 65536, 0, 131076, 0, 0, 65541, 0, 0, 131077, 65536, 0, 196612, 65536, 0, 262148, 0, 0, 196613, 0, 0, 262149, 65536, 0, 327684, 65536, 0, 393220, 0, 0, 327685, 0, 0, 393221, 65536, 0)
+layer_1/name = "Walls"
+layer_1/tile_data = PackedInt32Array()
+script = ExtResource("3_g1edg")
+
+[node name="King" type="Node2D" parent="."]
+script = ExtResource("4_m3spg")
+
+[node name="Sprite" type="Sprite2D" parent="King"]
+texture = SubResource("AtlasTexture_r61ni")
+
+[node name="GridMover" parent="King" instance=ExtResource("6_8hn4e")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, 5.145)
+zoom = Vector2(3, 3)
+
+[node name="Cursor" type="Node2D" parent="."]
+script = ExtResource("7_pg30j")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Cursor"]
+sprite_frames = SubResource("SpriteFrames_jrbdq")
+
+[node name="GridMover" type="Node" parent="Cursor"]
+script = ExtResource("9_244jr")
