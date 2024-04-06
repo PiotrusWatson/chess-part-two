@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://byi4gkblpkwco"]
+[gd_scene load_steps=21 format=3 uid="uid://byi4gkblpkwco"]
 
 [ext_resource type="Script" path="res://signals.gd" id="1_srkb5"]
 [ext_resource type="Texture2D" uid="uid://d03hhc0gc5voi" path="res://Sprites/pixel chess_v1.2/16x16 pieces/chess_tiles.png" id="2_sddm0"]
@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://cjpps2yx4jqr3" path="res://Components/grid_mover.tscn" id="6_8hn4e"]
 [ext_resource type="Texture2D" uid="uid://cc6u1mrhwmixh" path="res://Sprites/pixel chess_v1.2/16x16 pieces/cursor.png" id="7_1si2t"]
 [ext_resource type="Script" path="res://Scenes/cursor.gd" id="7_pg30j"]
+[ext_resource type="Shader" path="res://PaletteSwap.gdshader" id="7_td7vq"]
+[ext_resource type="Texture2D" uid="uid://d0w7syohrv5dy" path="res://Sprites/pixel chess_v1.2/16x16 pieces/cursor_palette.png" id="8_lfeid"]
 [ext_resource type="Script" path="res://Components/grid_mover.gd" id="9_244jr"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_g6xnf"]
@@ -25,6 +27,20 @@ pattern_0 = SubResource("TileMapPattern_g6xnf")
 [sub_resource type="AtlasTexture" id="AtlasTexture_r61ni"]
 atlas = ExtResource("4_g8f77")
 region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vebtw"]
+shader = ExtResource("7_td7vq")
+shader_parameter/skip_first_row = true
+shader_parameter/use_palette_alpha = false
+shader_parameter/fps = 6.0
+shader_parameter/palette = ExtResource("8_lfeid")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_76uxi"]
+shader = ExtResource("7_td7vq")
+shader_parameter/skip_first_row = true
+shader_parameter/use_palette_alpha = false
+shader_parameter/fps = 6.0
+shader_parameter/palette = ExtResource("8_lfeid")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_30n4f"]
 atlas = ExtResource("7_1si2t")
@@ -74,9 +90,11 @@ position = Vector2(0, 5.145)
 zoom = Vector2(3, 3)
 
 [node name="Cursor" type="Node2D" parent="."]
+material = SubResource("ShaderMaterial_vebtw")
 script = ExtResource("7_pg30j")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="Cursor"]
+material = SubResource("ShaderMaterial_76uxi")
 sprite_frames = SubResource("SpriteFrames_jrbdq")
 
 [node name="GridMover" type="Node" parent="Cursor"]
