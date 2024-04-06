@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d03hhc0gc5voi"
-path="res://.godot/imported/chess_tiles.png-1364ca37e78d076abc3aed0a803e0e6e.ctex"
+uid="uid://bwwggnj25dwo7"
+path="res://.godot/imported/BlackPieces_Simplified.png-464b2e7341b74e39b90332c92a947855.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/pixel chess_v1.2/16x16 pieces/chess_tiles.png"
-dest_files=["res://.godot/imported/chess_tiles.png-1364ca37e78d076abc3aed0a803e0e6e.ctex"]
+source_file="res://Sprites/Actors/BlackPieces_Simplified.png"
+dest_files=["res://.godot/imported/BlackPieces_Simplified.png-464b2e7341b74e39b90332c92a947855.ctex"]
 
 [params]
 

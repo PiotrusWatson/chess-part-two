@@ -1,0 +1,175 @@
+[gd_scene load_steps=21 format=3 uid="uid://cdfkwhnnxhphc"]
+
+[ext_resource type="Shader" path="res://Shaders/silhouette.gdshader" id="1_8ywe7"]
+[ext_resource type="FontFile" uid="uid://be6qj3vh08ib1" path="res://Fonts/TheQueen-Regular.otf" id="1_lm1gi"]
+[ext_resource type="Texture2D" uid="uid://0uywf8pebo2i" path="res://Sprites/pixel chess_v1.2/16x32 pieces/B_Rook.png" id="1_ydhk0"]
+[ext_resource type="FontFile" uid="uid://f5bb8x2auu02" path="res://Fonts/vulnus.otf" id="2_72vuy"]
+[ext_resource type="FontFile" uid="uid://bnkuu2rau2vi7" path="res://Fonts/Legend Bold.otf" id="3_ucsl1"]
+[ext_resource type="Shader" path="res://Shaders/simple_gradient.gdshader" id="5_jxsdx"]
+[ext_resource type="Script" path="res://Worlds/SubtitleGenerator.gd" id="5_uih3r"]
+
+[sub_resource type="Gradient" id="Gradient_jiws5"]
+offsets = PackedFloat32Array(0, 0, 1)
+colors = PackedColorArray(0.8, 0.576471, 0, 1, 0.768627, 0.376471, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hydre"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ii0fi"]
+width = 256
+as_normal_map = true
+color_ramp = SubResource("Gradient_jiws5")
+noise = SubResource("FastNoiseLite_hydre")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uc7rl"]
+shader = ExtResource("1_8ywe7")
+shader_parameter/rgb = Vector3(0.1, 0.1, 0.1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wfym1"]
+shader = ExtResource("1_8ywe7")
+shader_parameter/rgb = Vector3(0.1, 0.1, 0.1)
+
+[sub_resource type="Theme" id="Theme_fgyvx"]
+default_font = ExtResource("1_lm1gi")
+default_font_size = 200
+
+[sub_resource type="Theme" id="Theme_iufws"]
+default_font = ExtResource("2_72vuy")
+default_font_size = 35
+
+[sub_resource type="Gradient" id="Gradient_7ixcw"]
+offsets = PackedFloat32Array(0.294118, 0.470588, 0.897059)
+colors = PackedColorArray(0.395891, 0.395891, 0, 1, 0.860369, 0.860369, 0.860369, 1, 0.524506, 0.524506, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wfrlh"]
+gradient = SubResource("Gradient_7ixcw")
+width = 125
+height = 125
+fill_from = Vector2(0.69697, 1)
+fill_to = Vector2(0.0151515, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s7g3j"]
+shader = ExtResource("5_jxsdx")
+shader_parameter/gradient = SubResource("GradientTexture2D_wfrlh")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tbovq"]
+
+[sub_resource type="FontVariation" id="FontVariation_k6nwv"]
+base_font = ExtResource("3_ucsl1")
+
+[sub_resource type="Theme" id="Theme_yt3u5"]
+default_font = SubResource("FontVariation_k6nwv")
+default_font_size = 40
+/styles/gradient = SubResource("StyleBoxFlat_tbovq")
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -80.0
+offset_top = -179.0
+offset_right = -80.0
+offset_bottom = -179.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(4, 4)
+texture = SubResource("NoiseTexture2D_ii0fi")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="White" type="TextureRect" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_uc7rl")
+layout_mode = 0
+offset_left = 250.0
+offset_top = -92.0
+offset_right = 550.0
+offset_bottom = 508.0
+texture = ExtResource("1_ydhk0")
+
+[node name="Black" type="TextureRect" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_wfym1")
+layout_mode = 0
+offset_left = 657.0
+offset_top = -94.0
+offset_right = 957.0
+offset_bottom = 506.0
+texture = ExtResource("1_ydhk0")
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -279.5
+offset_top = -163.0
+offset_right = 279.5
+offset_bottom = 77.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_fgyvx")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+text = "Chess"
+
+[node name="Subtitle" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -201.5
+offset_top = 69.5
+offset_right = 201.5
+offset_bottom = 105.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_iufws")
+text = "Geneaology of the holy war"
+horizontal_alignment = 1
+script = ExtResource("5_uih3r")
+
+[node name="Part2" type="Label" parent="."]
+z_index = 5
+material = SubResource("ShaderMaterial_s7g3j")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 254.0
+offset_top = -86.0
+offset_right = 368.0
+offset_bottom = -39.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.380482
+theme = SubResource("Theme_yt3u5")
+theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 0
+text = "Part II"
+
+[node name="ColorRect" type="ColorRect" parent="Part2"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.34902, 0, 0.141176, 1)

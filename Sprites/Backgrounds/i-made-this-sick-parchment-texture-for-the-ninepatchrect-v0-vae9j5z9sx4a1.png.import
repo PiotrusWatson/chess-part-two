@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0w7syohrv5dy"
-path="res://.godot/imported/cursor_palette.png-5f40d3026956d4097f079ff098218494.ctex"
+uid="uid://crdwhu12tcjjt"
+path="res://.godot/imported/i-made-this-sick-parchment-texture-for-the-ninepatchrect-v0-vae9j5z9sx4a1.png-debd128d7ece25630ee9551b7063d1c0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/pixel chess_v1.2/16x16 pieces/cursor_palette.png"
-dest_files=["res://.godot/imported/cursor_palette.png-5f40d3026956d4097f079ff098218494.ctex"]
+source_file="res://Sprites/Backgrounds/i-made-this-sick-parchment-texture-for-the-ninepatchrect-v0-vae9j5z9sx4a1.png"
+dest_files=["res://.godot/imported/i-made-this-sick-parchment-texture-for-the-ninepatchrect-v0-vae9j5z9sx4a1.png-debd128d7ece25630ee9551b7063d1c0.ctex"]
 
 [params]
 
