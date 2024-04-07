@@ -1,0 +1,17 @@
+*Roles*
+
+Piotrus: i made this game )
+
+*Used Resources*
+
+Bartekd97: created gdDelaunay - used for the world map
+dani maccari: made the pixel chess asset pack! I'd be lost without this
+KoBeWi and tanuki-billie: made the palette swap shader I used!
+
+*Fonts*
+
+Vulnus
+Legend Bold
+The Queen
+CHNO PixelCode-Pro
+

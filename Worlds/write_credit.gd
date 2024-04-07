@@ -1,5 +1,6 @@
 extends HBoxContainer
 
+class_name Credit
 
 @onready var title_label = $Title/Title
 @onready var name_label = $Name/Name
