@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://m2rja8p0xxl6"]
+
+[ext_resource type="Script" path="res://Worlds/write_credit.gd" id="1_sd8c8"]
+
+[node name="Credit" type="HBoxContainer"]
+script = ExtResource("1_sd8c8")
+
+[node name="Title" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+
+[node name="Title" type="Label" parent="Title"]
+layout_mode = 2
+text = "Title
+"
+
+[node name="Name" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+
+[node name="Name" type="Label" parent="Name"]
+layout_mode = 2
+text = "Name"
+horizontal_alignment = 1

@@ -1,6 +1,7 @@
-[gd_scene load_steps=26 format=3 uid="uid://cdfkwhnnxhphc"]
+[gd_scene load_steps=24 format=3 uid="uid://cdfkwhnnxhphc"]
 
 [ext_resource type="Shader" path="res://Shaders/silhouette.gdshader" id="1_8ywe7"]
+[ext_resource type="PackedScene" uid="uid://1d1yyd3x1a11" path="res://Scenes/UI/background.tscn" id="1_k3kij"]
 [ext_resource type="FontFile" uid="uid://be6qj3vh08ib1" path="res://Fonts/TheQueen-Regular.otf" id="1_lm1gi"]
 [ext_resource type="Texture2D" uid="uid://0uywf8pebo2i" path="res://Sprites/pixel chess_v1.2/16x32 pieces/B_Rook.png" id="1_ydhk0"]
 [ext_resource type="FontFile" uid="uid://f5bb8x2auu02" path="res://Fonts/vulnus.otf" id="2_72vuy"]
@@ -8,18 +9,6 @@
 [ext_resource type="Shader" path="res://Shaders/simple_gradient.gdshader" id="5_jxsdx"]
 [ext_resource type="Script" path="res://Worlds/SubtitleGenerator.gd" id="5_uih3r"]
 [ext_resource type="FontFile" uid="uid://dm52l0edwrmsu" path="res://Fonts/CHNOPixelCodePro-Regular.otf" id="8_y30lj"]
-
-[sub_resource type="Gradient" id="Gradient_jiws5"]
-offsets = PackedFloat32Array(0, 0, 1)
-colors = PackedColorArray(0.8, 0.576471, 0, 1, 0.768627, 0.376471, 0, 1, 0, 0, 0, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_hydre"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ii0fi"]
-width = 256
-as_normal_map = true
-color_ramp = SubResource("Gradient_jiws5")
-noise = SubResource("FastNoiseLite_hydre")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uc7rl"]
 shader = ExtResource("1_8ywe7")
@@ -95,21 +84,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Background" parent="." instance=ExtResource("1_k3kij")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -80.0
-offset_top = -179.0
-offset_right = -80.0
-offset_bottom = -179.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(4, 4)
-texture = SubResource("NoiseTexture2D_ii0fi")
-expand_mode = 2
-stretch_mode = 4
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
 
 [node name="White" type="TextureRect" parent="."]
 texture_filter = 1

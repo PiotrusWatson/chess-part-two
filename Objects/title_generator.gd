@@ -26,12 +26,13 @@ func setup(_nouns: Array[String], _adjectives: Array[String], _conjunctions: Arr
 func file_to_string_array(path: String):
 	var f = FileAccess.open(path, FileAccess.READ)
 	var content = f.get_as_text()
-	return content.split("\n")
+	var content_array = content.split("\n")
+	return content_array.slice(0, content_array.size() - 1)
 	
 func setup_from_file(noun_path: String, adjective_path: String, conjunction_path: String):
-	nouns = file_to_string_array(noun_path).slice(0, nouns.size() - 1)
-	adjectives = file_to_string_array(adjective_path).slice(0, adjectives.size() - 1)
-	conjunctions = file_to_string_array(conjunction_path).slice(0, conjunctions.size() - 1)
+	nouns = file_to_string_array(noun_path)
+	adjectives = file_to_string_array(adjective_path)
+	conjunctions = file_to_string_array(conjunction_path)
 	
 func generate_sentence():
 	return generate_bespoke_sentence(maximum_words, minimum_words)

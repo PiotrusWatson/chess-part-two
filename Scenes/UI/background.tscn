@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://1d1yyd3x1a11"]
+
+[sub_resource type="Gradient" id="Gradient_jiws5"]
+offsets = PackedFloat32Array(0, 0, 1)
+colors = PackedColorArray(0.8, 0.576471, 0, 1, 0.768627, 0.376471, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hydre"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ii0fi"]
+width = 256
+as_normal_map = true
+color_ramp = SubResource("Gradient_jiws5")
+noise = SubResource("FastNoiseLite_hydre")
+
+[node name="Background" type="TextureRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -80.0
+offset_top = -179.0
+offset_right = -80.0
+offset_bottom = -179.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(4, 4)
+texture = SubResource("NoiseTexture2D_ii0fi")
+expand_mode = 2
+stretch_mode = 4
