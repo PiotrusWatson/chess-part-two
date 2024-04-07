@@ -32,14 +32,16 @@ class Triangle:
 	
 	var center: Vector2
 	var radius_sqr: float
-	
-	func _init(a: Vector2, b: Vector2, c: Vector2):
+	var minkowski_power: int
+	func _init(a: Vector2, b: Vector2, c: Vector2, _minkowski_power = 2):
 		self.a = a
 		self.b = b
 		self.c = c
+		minkowski_power = _minkowski_power
 		edge_ab = Edge.new(a,b)
 		edge_bc = Edge.new(b,c)
 		edge_ca = Edge.new(c,a)
+		
 		recalculate_circumcircle()
 	
 	
@@ -58,10 +60,15 @@ class Triangle:
 		)
 	
 		center = circum * 0.5
+		#replace with distance squared function if this breaks!
 		radius_sqr = a.distance_squared_to(center)
 	
+	func minkowski_distance(a: Vector2, b: Vector2, power: int):
+		return pow(pow(abs(a.x - b.x), power) + pow(abs(a.y - b.y), power), 1/power)
+		
 	func is_point_inside_circumcircle(point: Vector2) -> bool:
 		return center.distance_squared_to(point) < radius_sqr
+		return minkowski_distance(center, point, minkowski_power) < radius_sqr
 	
 	func is_corner(point: Vector2) -> bool:
 		return point == a || point == b || point == c
@@ -135,6 +142,7 @@ static func calculate_rect(points: PackedVector2Array, padding: float = 0.0) -> 
 
 # ==== PUBLIC VARIABLES ====
 var points: PackedVector2Array
+var minkowski_power: int
 
 
 # ==== PRIVATE VARIABLES ====
@@ -146,9 +154,10 @@ var _rect_super_triangle2: Triangle
 
 
 # ==== CONSTRUCTOR ====
-func _init(rect := Rect2()):
+func _init(rect := Rect2(), minkowski_power = 2):
 	if (rect.has_area()):
 		set_rectangle(rect)
+	self.minkowski_power = minkowski_power
 
 
 # ==== PUBLIC FUNCTIONS ====
@@ -170,8 +179,8 @@ func set_rectangle(rect: Rect2) -> void:
 	var c2 := Vector2(_rect_super.position + Vector2(0,_rect_super.size.y))
 	var c3 := Vector2(_rect_super.end)
 	_rect_super_corners.append_array([c0,c1,c2,c3])
-	_rect_super_triangle1 = Triangle.new(c0,c1,c2)
-	_rect_super_triangle2 = Triangle.new(c1,c2,c3)
+	_rect_super_triangle1 = Triangle.new(c0,c1,c2, minkowski_power)
+	_rect_super_triangle2 = Triangle.new(c1,c2,c3, minkowski_power)
 
 
 func is_border_triangle(triangle: Triangle) -> bool:
@@ -241,14 +250,13 @@ func triangulate() -> Array: # of Triangle
 	
 		_make_outer_polygon(bad_triangles, polygon)
 		for edge in polygon:
-			triangulation.append(Triangle.new(point, edge.a, edge.b))
+			triangulation.append(Triangle.new(point, edge.a, edge.b, minkowski_power))
 	
 	return triangulation
 
 
 func make_voronoi(triangulation: Array) -> Array: # of VoronoiSite
 	var sites: Array
-
 	var completion_counter: Array # of Vector2, no PackedVector2Array to allow more oeprations
 	var triangle_usage: Dictionary # of Triangle and Array[VoronoiSite], used for neighbour scan
 	for triangle in triangulation:
@@ -262,7 +270,6 @@ func make_voronoi(triangulation: Array) -> Array: # of VoronoiSite
 		for triangle in triangulation:
 			if !triangle.is_corner(point):
 				continue
-			
 			site.source_triangles.append(triangle)
 			
 			var edge: Edge = triangle.get_corner_opposite_edge(point)
@@ -388,4 +395,4 @@ func _calculate_super_triangle() -> Triangle:
 	var p2 := Vector2(minp.x - a4, maxp.y)
 	var p3 := Vector2(maxp.x + a4, maxp.y)
 	
-	return Triangle.new(p1, p2, p3)
+	return Triangle.new(p1, p2, p3, minkowski_power)
