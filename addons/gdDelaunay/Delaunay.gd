@@ -109,6 +109,13 @@ class VoronoiSite:
 		for point in polygon:
 			rect = rect.expand(point)
 		return rect
+		
+	func calculate_centroid() -> Vector2:
+		var total = Vector2.ZERO
+		for point in polygon:
+			total += point
+		var centroid = total / polygon.size()
+		return centroid
 
 
 class VoronoiEdge:
@@ -231,8 +238,8 @@ func triangulate() -> Array: # of Triangle
 	var triangulation: Array # of Triangle
 	
 	# calculate rectangle if none
-	if !(_rect.has_area()):
-		set_rectangle(calculate_rect(points))
+	#if !(_rect.has_area()):
+	set_rectangle(calculate_rect(points))
 	
 	triangulation.append(_rect_super_triangle1)
 	triangulation.append(_rect_super_triangle2)
@@ -305,6 +312,23 @@ func make_voronoi(triangulation: Array) -> Array: # of VoronoiSite
 	
 	return sites
 
+func relax_once(sites):
+	var centroids = []
+	points.clear()
+	for site in sites:
+		var centroid = site.calculate_centroid()
+		add_point(centroid)
+	var triangles = triangulate()
+	var new_sites = make_voronoi(triangles)
+	return {"triangles": triangles, "sites": new_sites}
+
+func relax_multiple_times(sites, number_of_times = 2):
+	var result
+	for i in range(number_of_times):
+		result = relax_once(sites)
+		sites = result["sites"]
+	return result
+	
 
 # ==== PRIVATE FUNCTIONS ====	
 func _make_outer_polygon(triangles: Array, out_polygon: Array) -> void:

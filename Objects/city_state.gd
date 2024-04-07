@@ -31,13 +31,22 @@ func add_neighbour_back(other: CityState):
 
 func get_old_neighbours():
 	return voronoi_site.neighbours
-	
+
+func make_label() -> Label:
+	var label = Label.new()
+	label.text = name
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	label.global_position = voronoi_site.center
+	return label
+
 func make_polygon() -> Polygon2D:
 	var polygon = Polygon2D.new()
 	var p = voronoi_site.polygon
 	p.append(p[0])
 	polygon.polygon = p
 	polygon = randomly_colour_polygon(polygon)
+	polygon.add_child(make_label())
 	return polygon
 	
 func randomly_colour_polygon(polygon: Polygon2D) -> Polygon2D:

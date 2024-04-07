@@ -20,6 +20,9 @@ func generate_zones(zone_numbers = Vector2(10, 10)):
 			add_point(i, j)
 	triangles = delaunay.triangulate()
 	sites = delaunay.make_voronoi(triangles)
+	var result_dict = delaunay.relax_multiple_times(sites, 2)
+	triangles = result_dict["triangles"]
+	sites = result_dict["sites"]
 	
 func add_point(x, y):
 	var x_position = start_point.x + x * distance + randi_range(-random_flibble,random_flibble)
@@ -48,7 +51,7 @@ func decide_which_states_are_empty(states):
 
 func get_visible_states(parent: Node, states):
 	for state in states:
-		if !delaunay.is_border_site(state.get_site()):
-			var polygon = state.make_polygon()
-			parent.add_child(polygon)
+		var polygon = state.make_polygon()
+		parent.add_child(polygon)
+		
 	
