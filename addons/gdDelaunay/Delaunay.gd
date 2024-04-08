@@ -233,13 +233,12 @@ func remove_border_sites(sites: Array) -> void:
 	for border_site in border_sites:
 		sites.erase(border_site)
 
-
 func triangulate() -> Array: # of Triangle
 	var triangulation: Array # of Triangle
 	
 	# calculate rectangle if none
-	#if !(_rect.has_area()):
-	set_rectangle(calculate_rect(points))
+	if !(_rect.has_area()):
+		set_rectangle(calculate_rect(points))
 	
 	triangulation.append(_rect_super_triangle1)
 	triangulation.append(_rect_super_triangle2)
@@ -250,6 +249,7 @@ func triangulate() -> Array: # of Triangle
 	for point in points:
 		bad_triangles.clear()
 		polygon.clear()
+		
 	
 		_find_bad_triangles(point, triangulation, bad_triangles)
 		for bad_tirangle in bad_triangles:
@@ -316,7 +316,11 @@ func relax_once(sites):
 	var centroids = []
 	points.clear()
 	for site in sites:
-		var centroid = site.calculate_centroid()
+		var centroid
+		if !is_border_site(site):
+			centroid = site.calculate_centroid()
+		else:
+			centroid = site.center
 		add_point(centroid)
 	var triangles = triangulate()
 	var new_sites = make_voronoi(triangles)

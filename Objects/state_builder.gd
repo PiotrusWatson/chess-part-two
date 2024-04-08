@@ -22,7 +22,7 @@ func generate_zones(zone_numbers = Vector2(10, 10)):
 			add_point(i, j)
 	triangles = delaunay.triangulate()
 	sites = delaunay.make_voronoi(triangles)
-	var result_dict = delaunay.relax_multiple_times(sites, 2)
+	var result_dict = delaunay.relax_multiple_times(sites, 3)
 	triangles = result_dict["triangles"]
 	sites = result_dict["sites"]
 	
