@@ -10,13 +10,17 @@ var voronoi_site: Delaunay.VoronoiSite
 var neighbours = []
 var type: StateType
 var color: Color
+var height: float
+var threshold
 func get_site():
 	return voronoi_site
 
-func _init(site: Delaunay.VoronoiSite):
+func _init(site: Delaunay.VoronoiSite, threshold):
 	name_generator = NameGenerator.new()
 	voronoi_site = site
+	self.threshold = threshold
 	decide_state_type(StateType.CITY)
+
 
 func is_in_neighbours(site: Delaunay.VoronoiSite):
 	for neighbour_edge in voronoi_site.neighbours:
@@ -58,7 +62,19 @@ func make_polygon() -> Polygon2D:
 	return polygon
 
 func randomly_generate_color():
-	color = Color(randf_range(0,1),randf_range(0,1),randf_range(0,1),0.5)
+	color = Color(randf_range(0,1),randf_range(0,1),randf_range(0,1),1)
 func randomly_colour_polygon(polygon: Polygon2D) -> Polygon2D:
 	polygon.color = Color(randf_range(0,1),randf_range(0,1),randf_range(0,1),0.5)
 	return polygon
+	
+func get_centre():
+	return voronoi_site.center
+	
+func set_height(height):
+	self.height = height
+	print(self.height)
+	if is_under_water():
+		decide_state_type(StateType.NONE)
+
+func is_under_water():
+	return height < threshold

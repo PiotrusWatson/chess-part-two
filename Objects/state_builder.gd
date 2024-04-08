@@ -6,15 +6,16 @@ var start_point: Vector2
 var distance: float
 var random_flibble: int
 var relax_amount: int
-
+var threshold: float
 var triangles
 var sites
-func _init(_start_point= Vector2(50, 50), _distance = 100, _random_flibble=15, relax_amount = 2):
+func _init(threshold, _start_point= Vector2(50, 50), _distance = 100, _random_flibble=15, relax_amount = 2):
 	delaunay = Delaunay.new()
 	start_point = _start_point
 	distance = _distance
 	random_flibble = _random_flibble
 	self.relax_amount = relax_amount
+	self.threshold = threshold
 
 func generate_zones(zone_numbers = Vector2(10, 10)):
 	for i in range(zone_numbers.x):
@@ -34,7 +35,7 @@ func add_point(x, y):
 func build_states():
 	var sites_to_states = {}
 	for site in sites:
-		var current_state = CityState.new(site)
+		var current_state = CityState.new(site, threshold)
 		sites_to_states[site] = current_state
 	
 	for state in sites_to_states.values():
