@@ -5,14 +5,16 @@ var delaunay
 var start_point: Vector2
 var distance: float
 var random_flibble: int
+var relax_amount: int
 
 var triangles
 var sites
-func _init(_start_point= Vector2(50, 50), _distance = 100, _random_flibble=15):
+func _init(_start_point= Vector2(50, 50), _distance = 100, _random_flibble=15, relax_amount = 2):
 	delaunay = Delaunay.new()
 	start_point = _start_point
 	distance = _distance
 	random_flibble = _random_flibble
+	self.relax_amount = relax_amount
 
 func generate_zones(zone_numbers = Vector2(10, 10)):
 	for i in range(zone_numbers.x):
@@ -41,17 +43,8 @@ func build_states():
 			state.add_neighbour_back(sites_to_states[neighbour.other])
 	
 	var states = sites_to_states.values()
-	decide_which_states_are_empty(states)
-	return states
+	return CityStates.new(states, delaunay)
 	
-func decide_which_states_are_empty(states):
-	for state in states:
-		if delaunay.is_border_site(state.get_site()):
-			state.type = CityState.StateType.NONE
 
-func get_visible_states(parent: Node, states):
-	for state in states:
-		var polygon = state.make_polygon()
-		parent.add_child(polygon)
 		
 	
